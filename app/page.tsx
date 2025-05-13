@@ -4,15 +4,7 @@ import { useState } from "react";
 
 const LANGUAGES = {
   'en-US': 'English (US)',
-  'es-ES': 'Spanish',
-  'fr-FR': 'French',
-  'de-DE': 'German',
-  'it-IT': 'Italian',
-  'ja-JP': 'Japanese',
-  'ko-KR': 'Korean',
-  'zh-CN': 'Chinese',
-  'hi-IN': 'Hindi',
-  'pt-BR': 'Portuguese'
+  
 }
 
 const Home = () => {
