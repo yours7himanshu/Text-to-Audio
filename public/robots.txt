@@ -1,0 +1,6 @@
+# Allow all web crawlers full access
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://text-to-audio-black.vercel.app/sitemap.xml 

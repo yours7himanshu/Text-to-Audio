@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const LANGUAGES = {
   'en-US': 'English (US)',
-  
+ 
 }
 
 const Home = () => {
@@ -64,26 +64,31 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-100 py-8 px-4">
-      <div className="w-full max-w-4xl h-[80%] mx-auto">
-        <h1 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-          </svg>
-          Generate Text to Audio
-        </h1>
+    <section className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-100 py-8 px-4">
+      <div className="w-full max-w-4xl mx-auto mt-24  ">
+        <header>
+          <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4 text-center">
+            Free Text to Speech Converter
+          </h1>
+          <p className="text-lg text-center mb-8 text-gray-300">
+            Convert any text to natural-sounding speech in multiple languages - completely free
+          </p>
+        </header>
+        
         <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
           <div className="p-6">
             <form onSubmit={handleConvert} className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="language-select" className="block text-sm font-medium text-gray-300 mb-2">
                     Language
                   </label>
                   <select
+                    id="language-select"
                     value={selectedLanguage}
                     onChange={(e) => setSelectedLanguage(e.target.value)}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-100"
+                    aria-label="Select language"
                   >
                     {Object.entries(LANGUAGES).map(([code, name]) => (
                       <option key={code} value={code} className="bg-gray-700">
@@ -101,6 +106,7 @@ const Home = () => {
                       ${loading || !text 
                         ? 'bg-gray-600 cursor-not-allowed' 
                         : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-1'}`}
+                    aria-label="Convert text to speech"
                   >
                     {loading ? 'Converting...' : 'Convert →'}
                   </button>
@@ -108,27 +114,30 @@ const Home = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="text-input" className="block text-sm font-medium text-gray-300 mb-2">
                   Text Input
                 </label>
                 <textarea
+                  id="text-input"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Enter your text here..."
                   className="w-full h-48 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-100 placeholder-gray-400"
                   required
+                  aria-label="Text to convert to speech"
                 />
               </div>
             </form>
 
             {error && (
-              <div className="mt-6 px-4 py-3 bg-red-900/50 border border-red-700 text-red-200 rounded-lg">
+              <div className="mt-6 px-4 py-3 bg-red-900/50 border border-red-700 text-red-200 rounded-lg" role="alert" aria-live="assertive">
                 {error}
               </div>
             )}
 
             {audioUrl && (
               <div className="mt-6 space-y-4">
+                <h2 className="sr-only">Generated Audio</h2>
                 <div className="p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                   <audio controls className="w-full">
                     <source src={audioUrl} type="audio/mpeg" />
@@ -139,9 +148,10 @@ const Home = () => {
                 <button
                   onClick={handleDownload}
                   className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  aria-label="Download MP3 file"
                 >
                   <span>Download MP3</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
@@ -149,8 +159,18 @@ const Home = () => {
             )}
           </div>
         </div>
+        
+        <div className=" text-center mt-24 text-gray-400">
+          <h2 className="text-xl font-semibold mb-2 text-blue-300">Why Use Our Text to Speech Tool?</h2>
+          <ul className="list-none space-y-2 max-w-2xl mx-auto">
+            <li>✓ <strong>Completely Free</strong> - No hidden fees or limits</li>
+            <li>✓ <strong>Multiple Languages</strong> - Support for several languages</li>
+            <li>✓ <strong>Accessible Design</strong> - Built for everyone, including visually impaired users</li>
+            <li>✓ <strong>No Sign-up Required</strong> - Convert text immediately with no account needed</li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
