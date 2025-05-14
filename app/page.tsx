@@ -68,10 +68,10 @@ const Home = () => {
       <div className="w-full max-w-4xl mx-auto mt-24  ">
         <header>
           <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4 text-center">
-            Free Text to Speech Converter
+            Free Text to Audio Converter
           </h1>
-          <p className="text-lg text-center mb-8 text-gray-300">
-            Convert any text to natural-sounding speech in multiple languages - completely free
+          <p className="text-lg max-md:text-sm text-center mb-8 text-gray-300">
+            Convert any text to Audio easily and quickly.
           </p>
         </header>
         
