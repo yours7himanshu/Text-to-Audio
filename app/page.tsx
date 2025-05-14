@@ -164,10 +164,15 @@ const Home = () => {
           <h2 className="text-xl font-semibold mb-2 text-blue-300">Why Use Our Text to Speech Tool?</h2>
           <ul className="list-none space-y-2 max-w-2xl mx-auto">
             <li>✓ <strong>Completely Free</strong> - No hidden fees or limits</li>
-            <li>✓ <strong>Multiple Languages</strong> - Support for several languages</li>
+            <li>✓ <strong>100% Private</strong> - We do not collect or store any user data</li>
             <li>✓ <strong>Accessible Design</strong> - Built for everyone, including visually impaired users</li>
             <li>✓ <strong>No Sign-up Required</strong> - Convert text immediately with no account needed</li>
           </ul>
+          
+          <p className="mt-4  text-gray-400 border-t border-gray-700 pt-4 max-w-2xl mx-auto">
+            Your privacy matters to us. We do not track, store, or collect any of your text inputs or generated audio files.
+            All conversions happen in your browser, and your data is never sent to our servers for storage.
+          </p>
         </div>
       </div>
     </section>
