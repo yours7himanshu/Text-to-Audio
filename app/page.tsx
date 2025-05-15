@@ -65,8 +65,8 @@ const Home = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4">
             Free Text to Speech Converter
           </h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            Convert any text to  speech in English - completely free.
+          <p className="text-sm text-gray-300 max-w-3xl mx-auto">
+            Convert any text to  speech in English for completely free.
             Our tool is designed to help visually impaired users and anyone who prefers listening over reading.
           </p>
         </header>
@@ -79,13 +79,13 @@ const Home = () => {
                 <button
                   type="submit"
                   disabled={loading || !text}
-                  className={`w-full px-4 py-2 rounded-lg font-medium transition-all duration-200
+                  className={`w-full px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer
                     ${loading || !text 
                       ? 'bg-gray-600 cursor-not-allowed' 
                       : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-1'}`}
                   aria-label="Convert text to speech"
                 >
-                  {loading ? 'Converting...' : 'Convert to Speech →'}
+                  {loading ? 'Converting...' : 'Convert to Audio '}
                 </button>
               </div>
 
@@ -113,7 +113,7 @@ const Home = () => {
 
             {audioUrl && (
               <div className="mt-6 space-y-4">
-                <h3 className="text-xl font-semibold text-green-400">Your Speech is Ready!</h3>
+                <h3 className="text-xl font-semibold text-green-400">Your Audio is Ready!</h3>
                 <div className="p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                   <audio controls className="w-full">
                     <source src={audioUrl} type="audio/mpeg" />
@@ -123,7 +123,7 @@ const Home = () => {
 
                 <button
                   onClick={handleDownload}
-                  className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 flex items-center justify-center gap-2 cursor-pointer"
                   aria-label="Download MP3 file"
                 >
                   <span>Download MP3</span>
@@ -222,9 +222,7 @@ const Home = () => {
               Your privacy matters to us. We do not track, store, or collect any of your text inputs or generated audio files.
               All conversions happen in your browser, and your data is never sent to our servers for storage.
             </p>
-            <p className="text-gray-400 text-center mt-2">
-              Powered by Google&apos;s Text-to-Speech (gTTS) technology.
-            </p>
+           
           </div>
         </div>
         
