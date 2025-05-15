@@ -1,17 +1,12 @@
 'use client'
 
 import { useState } from "react";
-
-const LANGUAGES = {
-  'en-US': 'English (US)',
- 
-}
+import Link from "next/link";
 
 const Home = () => {
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('en-US');
   const [error, setError] = useState('');
 
   const handleConvert = async (e: React.FormEvent) => {
@@ -28,7 +23,7 @@ const Home = () => {
         },
         body: JSON.stringify({
           text,
-          language: selectedLanguage,
+          language: 'en-US',
         }),
       });
 
@@ -64,64 +59,45 @@ const Home = () => {
   };
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-100 py-8 px-4">
-      <div className="w-full max-w-4xl mx-auto mt-24  ">
-        <header>
-          <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4 text-center">
-            Free Text to Audio Converter
+    <section className="flex flex-col items-center justify-start bg-gray-900 text-gray-100 py-8 px-4">
+      <div className="w-full max-w-4xl mx-auto">
+        <header className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4">
+            Free Text to Speech Converter
           </h1>
-          <p className="text-lg max-md:text-sm text-center mb-8 text-gray-300">
-            Convert any text to Audio easily and quickly.
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            Convert any text to  speech in English - completely free.
+            Our tool is designed to help visually impaired users and anyone who prefers listening over reading.
           </p>
         </header>
         
-        <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
+        <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-gray-700 mb-12">
           <div className="p-6">
+            <h2 className="text-2xl font-bold text-center text-blue-400 mb-6">Convert Your Text to Audio</h2>
             <form onSubmit={handleConvert} className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="language-select" className="block text-sm font-medium text-gray-300 mb-2">
-                    Language
-                  </label>
-                  <select
-                    id="language-select"
-                    value={selectedLanguage}
-                    onChange={(e) => setSelectedLanguage(e.target.value)}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-100"
-                    aria-label="Select language"
-                  >
-                    {Object.entries(LANGUAGES).map(([code, name]) => (
-                      <option key={code} value={code} className="bg-gray-700">
-                        {name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex items-end">
-                  <button
-                    type="submit"
-                    disabled={loading || !text}
-                    className={`w-full px-4 py-2 rounded-lg font-medium transition-all duration-200
-                      ${loading || !text 
-                        ? 'bg-gray-600 cursor-not-allowed' 
-                        : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-1'}`}
-                    aria-label="Convert text to speech"
-                  >
-                    {loading ? 'Converting...' : 'Convert →'}
-                  </button>
-                </div>
+              <div>
+                <button
+                  type="submit"
+                  disabled={loading || !text}
+                  className={`w-full px-4 py-2 rounded-lg font-medium transition-all duration-200
+                    ${loading || !text 
+                      ? 'bg-gray-600 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-1'}`}
+                  aria-label="Convert text to speech"
+                >
+                  {loading ? 'Converting...' : 'Convert to Speech →'}
+                </button>
               </div>
 
               <div>
                 <label htmlFor="text-input" className="block text-sm font-medium text-gray-300 mb-2">
-                  Text Input
+                  Enter Your Text
                 </label>
                 <textarea
                   id="text-input"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder="Enter your text here..."
+                  placeholder="Type or paste your text here to convert to speech..."
                   className="w-full h-48 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-100 placeholder-gray-400"
                   required
                   aria-label="Text to convert to speech"
@@ -137,7 +113,7 @@ const Home = () => {
 
             {audioUrl && (
               <div className="mt-6 space-y-4">
-                <h2 className="sr-only">Generated Audio</h2>
+                <h3 className="text-xl font-semibold text-green-400">Your Speech is Ready!</h3>
                 <div className="p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                   <audio controls className="w-full">
                     <source src={audioUrl} type="audio/mpeg" />
@@ -160,19 +136,122 @@ const Home = () => {
           </div>
         </div>
         
-        <div className=" text-center mt-24 text-gray-400">
-          <h2 className="text-xl font-semibold mb-2 text-blue-300">Why Use Our Text to Speech Tool?</h2>
-          <ul className="list-none space-y-2 max-w-2xl mx-auto">
-            <li>✓ <strong>Completely Free</strong> - No hidden fees or limits</li>
-            <li>✓ <strong>100% Private</strong> - We do not collect or store any user data</li>
-            <li>✓ <strong>Accessible Design</strong> - Built for everyone, including visually impaired users</li>
-            <li>✓ <strong>No Sign-up Required</strong> - Convert text immediately with no account needed</li>
-          </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="bg-gray-800/50 rounded-lg p-6 shadow-lg border border-gray-700">
+            <h2 className="text-xl font-semibold text-blue-300 mb-4">How It Works</h2>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Enter your text in the box above</li>
+              <li>Click the &quot;Convert&quot; button</li>
+              <li>Listen to the generated speech</li>
+              <li>Download the audio file if needed</li>
+            </ol>
+            <p className="mt-4 text-gray-400">
+              The conversion process happens instantly, with no delays or waiting times.
+              Start converting your text to speech right away!
+            </p>
+          </div>
           
-          <p className="mt-4  text-gray-400 border-t border-gray-700 pt-4 max-w-2xl mx-auto">
-            Your privacy matters to us. We do not track, store, or collect any of your text inputs or generated audio files.
-            All conversions happen in your browser, and your data is never sent to our servers for storage.
-          </p>
+          <div className="bg-gray-800/50 rounded-lg p-6 shadow-lg border border-gray-700">
+            <h2 className="text-xl font-semibold text-blue-300 mb-4">Use Cases</h2>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>Accessibility</strong>: Help visually impaired users access written content</li>
+              <li><strong>Learning</strong>: Improve pronunciation and language skills</li>
+              <li><strong>Multitasking</strong>: Listen to articles while doing other activities</li>
+              <li><strong>Content Creation</strong>: Create voiceovers for videos or presentations</li>
+              <li><strong>Proofreading</strong>: Hear your content to catch errors</li>
+            </ul>
+            <p className="mt-4 text-gray-400">
+              Our tool is designed for everyday use by anyone who needs text-to-speech conversion.
+            </p>
+          </div>
+        </div>
+        
+        <div className="bg-gray-800/50 rounded-lg p-6 shadow-lg border border-gray-700 mb-12">
+          <h2 className="text-xl font-semibold text-blue-300 mb-4 text-center">Why Choose Our Text to Speech Tool?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ul className="list-none space-y-4">
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">100% Free</strong>
+                  <p className="text-gray-400 text-sm">No hidden fees, subscriptions, or usage limits</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">Completely Private</strong>
+                  <p className="text-gray-400 text-sm">We don&apos;t collect or store any of your text data</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">High-Quality Audio</strong>
+                  <p className="text-gray-400 text-sm">Clear, natural-sounding speech output</p>
+                </div>
+              </li>
+            </ul>
+            <ul className="list-none space-y-4">
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">No Sign-up Required</strong>
+                  <p className="text-gray-400 text-sm">Use immediately without creating an account</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">Accessible Design</strong>
+                  <p className="text-gray-400 text-sm">Built with accessibility in mind for all users</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <div>
+                  <strong className="text-white">English (US) Optimized</strong>
+                  <p className="text-gray-400 text-sm">Specifically tuned for clear American English pronunciation</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="mt-6 border-t border-gray-700 pt-4">
+            <p className="text-gray-400 text-center">
+              Your privacy matters to us. We do not track, store, or collect any of your text inputs or generated audio files.
+              All conversions happen in your browser, and your data is never sent to our servers for storage.
+            </p>
+            <p className="text-gray-400 text-center mt-2">
+              Powered by Google&apos;s Text-to-Speech (gTTS) technology.
+            </p>
+          </div>
+        </div>
+        
+        <div className="bg-gray-800/50 rounded-lg p-6 shadow-lg border border-gray-700">
+          <h2 className="text-xl font-semibold text-blue-300 mb-4 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-semibold text-white">Is this service really free?</h3>
+              <p className="text-gray-400">Yes, our text-to-speech converter is completely free to use with no restrictions or limits.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">Do you store the text I convert?</h3>
+              <p className="text-gray-400">No, we do not store any of the text you input or the audio files that are generated. Your privacy is our priority.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">Can I use the generated audio files commercially?</h3>
+              <p className="text-gray-400">Yes, the audio files you generate are yours to use for personal or commercial purposes.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">Is there a limit to how much text I can convert?</h3>
+              <p className="text-gray-400">There are some technical limitations based on your browser&apos;s capabilities, but for most typical use cases, you can convert substantial amounts of text.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">How can I report issues or request features?</h3>
+              <p className="text-gray-400">You can contact us through our <Link href="/about" className="text-blue-400 hover:underline">About page</Link> with any feedback, issues, or feature requests.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
